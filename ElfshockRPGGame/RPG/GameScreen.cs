@@ -1,6 +1,6 @@
 ﻿namespace RPG
 {
-    public enum Views
+    public enum GameScreen
     {
         MainMenu,
         CharacterSelect,
