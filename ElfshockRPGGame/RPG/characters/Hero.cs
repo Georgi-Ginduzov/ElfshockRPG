@@ -12,16 +12,19 @@ namespace RPG.characters
         public void IncreaseStrength(int points)
         {
             Strength += points;
+            Setup();
         }
 
         public void IncreaseAgility(int points)
         {
             Agility += points;
+            Setup();
         }
 
         public void IncreaseIntelligence(int points)
         {
             Intelligence += points;
+            Setup();
         }
     }
 }
