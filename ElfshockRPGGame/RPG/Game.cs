@@ -81,7 +81,17 @@ namespace RPG
             _currentScreen = GameScreen.InGame;
         }
 
-       
+        private void ShowInGame()
+        {
+            // In-game logic here
+            Console.Clear();
+            Console.WriteLine("In Game Screen");
+            Console.WriteLine("Press 'E' to exit to Main Menu.");
+            if (Console.ReadKey().Key == ConsoleKey.E)
+            {
+                _currentScreen = GameScreen.Exit;
+            }
+        }
 
         private void ExitGame()
         {
