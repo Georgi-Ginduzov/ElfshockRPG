@@ -2,13 +2,20 @@
 
 namespace RPG.characters
 {
-    public abstract class Hero : Character, IBuff
+    public abstract class Hero : Character, IBuff, ISaveableHero
     {
         protected Hero()
         {
             _x = 1;
             _y = 1;
+
+            CreationTime = DateTime.Now;
+            Id = Guid.NewGuid();
         }
+
+        public DateTime CreationTime { get; }
+        public Guid Id { get; }
+
         public void IncreaseStrength(int points)
         {
             Strength += points;

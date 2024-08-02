@@ -1,4 +1,5 @@
 using RPG.characters;
+using RPG.models;
 using System.Reflection;
 
 namespace RPG
@@ -151,7 +152,29 @@ namespace RPG
             }
         }
 
-        
+        private void SaveHeroToDatabase(Hero hero)
+        {
+            using (var context = new GameContext())
+            {
+                var heroEntity = new HeroEntity
+                {
+                    Id = hero.Id,
+                    Type = hero.GetType().Name,
+                    Strength = hero.Strength,
+                    Agility = hero.Agility,
+                    Intelligence = hero.Intelligence,
+                    Range = hero.Range,
+                    Symbol = hero.Symbol,
+                    Health = hero.Health,
+                    Mana = hero.Mana,
+                    Damage = hero.Damage,
+                    CreationTime = hero.CreationTime
+                };
+
+                context.Heroes.Add(heroEntity);
+                context.SaveChanges();
+            }
+        }
 
 
         private static bool IsValidPointsInput(int input, int remainingPoints) => input >= 0 && input <= remainingPoints;
