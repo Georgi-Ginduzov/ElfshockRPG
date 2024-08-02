@@ -40,6 +40,15 @@ namespace RPG
         }
 
         
+
+        private void ExitGame()
+        {
+            Console.Clear();
+            Console.WriteLine("Exiting the game. Goodbye!");
+            Environment.Exit(0);
+        }
+
+        
     }
 
 }
