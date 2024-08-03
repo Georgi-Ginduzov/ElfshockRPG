@@ -1,4 +1,4 @@
-name: .NET Desktop Tests
+name: Build and Test
 
 on:
   push:
@@ -22,10 +22,10 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ElfshockRPG/ElfshockRPGGame/ElfshockRPGGame.sln
 
     - name: Build the project
-      run: dotnet build --no-restore
+      run: dotnet build ElfshockRPG/ElfshockRPGGame/RPG/RPG.csproj --no-restore
 
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ElfshockRPG/ElfshockRPGGame/GameTests/Gametests.csproj --no-build --verbosity normal
