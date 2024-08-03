@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RPG.characters;
 using RPG.models;
 using System.Reflection;
@@ -8,6 +9,12 @@ namespace RPG
     {
         private GameScreen _currentScreen = GameScreen.MainMenu;
         private const int maxPointsForDistribution = 3;
+        private Type[] GetHeroTypes() => Assembly.GetAssembly(typeof(Hero))
+                           .GetTypes()
+                           .Where(t => t.IsSubclassOf(typeof(Hero)) && !t.IsAbstract)
+                           .ToArray();
+        private Hero _hero;
+        
 
         public void Run()
         {
@@ -60,7 +67,7 @@ namespace RPG
 
             int selectedIndex = int.Parse(choice) - 1;
             Type selectedHeroType = heroTypes[selectedIndex];
-            Hero hero = Activator.CreateInstance(type: selectedHeroType) as Hero;
+            _hero = Activator.CreateInstance(type: selectedHeroType) as Hero;
 
             Console.WriteLine($"Would you like to buff up your stats before starting?        (Limit: {maxPointsForDistribution} points total");
             Console.WriteLine("Response (Y/N): ");
@@ -73,11 +80,11 @@ namespace RPG
             
             if (choice.Equals("y"))
             {
-                DistributePoints(hero);
+                DistributePoints(_hero);
             }
 
-            SaveHeroToDatabase(hero);
-            Console.WriteLine($"Hero {hero.GetType().Name} created and saved to database.");
+            SaveHeroToDatabase(_hero);
+            Console.WriteLine($"Hero {_hero.GetType().Name} created and saved to database.");
             _currentScreen = GameScreen.InGame;
         }
 
@@ -164,7 +171,7 @@ namespace RPG
 
         private void SaveHeroToDatabase(Hero hero)
         {
-            using (var context = new GameContext())
+            using (var context = new GameContext(new DbContextOptions<GameContext>()))
             {
                 var heroEntity = new HeroEntity
                 {
@@ -199,10 +206,11 @@ namespace RPG
             return true;
         }
 
-        private Type[] GetHeroTypes() => Assembly.GetAssembly(typeof(Hero))
-                           .GetTypes()
-                           .Where(t => t.IsSubclassOf(typeof(Hero)) && !t.IsAbstract)
-                           .ToArray();
+        private void PrintField()
+        {
+
+        }
+        
     }
 
 }
