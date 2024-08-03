@@ -1,4 +1,4 @@
-﻿namespace RPG
+﻿namespace RPG.screens
 {
     public enum GameScreen
     {
