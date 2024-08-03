@@ -2,7 +2,7 @@
 {
     public interface ICharacter
     {
-        public void Move();
+        public void Move(int dx, int dy);
         public void Attack();
     }
 }

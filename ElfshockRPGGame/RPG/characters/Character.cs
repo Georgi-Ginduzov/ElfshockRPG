@@ -78,11 +78,15 @@ namespace RPG.characters
             throw new NotImplementedException();
         }
 
-        public void Move()
+        public void Move(int dx, int dy)
         {
-            throw new NotImplementedException();
+            _x += dx;
+            _y += dy;
         }
 
-
+        public (int x, int y) GetPosition()
+        {
+            return (_x, _y);
+        }
     }
 }
