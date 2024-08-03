@@ -3,16 +3,17 @@ using RPG.characters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Assert = NUnit.Framework.Assert;
 
-namespace GameTests
+namespace GameTests.characterSelectScreenTests
 {
     [TestClass]
     public class GameTests
     {
+        // Character creation tests
         [Test]
         public void TestHeroCreation_Mage()
         {
             var hero = CreateHero<Mage>();
-            
+
             Assert.Multiple(() =>
             {
                 Assert.That(hero, Is.Not.Null);
@@ -33,7 +34,7 @@ namespace GameTests
         public void TestHeroCreation_Warrior()
         {
             var hero = CreateHero<Warrior>();
-            
+
             Assert.Multiple(() =>
             {
                 Assert.That(hero, Is.Not.Null);
@@ -99,5 +100,69 @@ namespace GameTests
 
             return (hero as T)!;
         }
+
+
+        // Character points distribution tests
+        [Test]
+        public void TestDistributePoints_Mage()
+        {
+            var hero = new Mage();
+            DistributePoints(hero, 1, 1, 1);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(hero.Strength, Is.EqualTo(3));
+                Assert.That(hero.Agility, Is.EqualTo(2));
+                Assert.That(hero.Intelligence, Is.EqualTo(4));
+                Assert.That(hero.Health, Is.EqualTo(15));
+                Assert.That(hero.Mana, Is.EqualTo(12));
+                Assert.That(hero.Damage, Is.EqualTo(4));
+            });
+        }
+
+        [Test]
+        public void TestDistributePoints_Warrior()
+        {
+            var hero = new Warrior();
+            DistributePoints(hero, 2, 1, 0);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(hero.Strength, Is.EqualTo(5));
+                Assert.That(hero.Agility, Is.EqualTo(4));
+                Assert.That(hero.Intelligence, Is.EqualTo(0));
+                Assert.That(hero.Health, Is.EqualTo(25));
+                Assert.That(hero.Mana, Is.EqualTo(0));
+                Assert.That(hero.Damage, Is.EqualTo(8));
+            });
+        }
+
+        [Test]
+        public void TestDistributePoints_Archer()
+        {
+            var hero = new Archer();
+            DistributePoints(hero, 0, 3, 0);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(hero.Strength, Is.EqualTo(2));
+                Assert.That(hero.Agility, Is.EqualTo(7));
+                Assert.That(hero.Intelligence, Is.EqualTo(0));
+                Assert.That(hero.Health, Is.EqualTo(10));
+                Assert.That(hero.Mana, Is.EqualTo(0));
+                Assert.That(hero.Damage, Is.EqualTo(14));
+            });
+        }
+
+        private void DistributePoints(Hero hero, int strengthPoints, int agilityPoints, int intelligencePoints)
+        {
+            hero.IncreaseStrength(strengthPoints);
+            hero.IncreaseAgility(agilityPoints);
+            hero.IncreaseIntelligence(intelligencePoints);
+        }
+
+
+
+
     }
 }
