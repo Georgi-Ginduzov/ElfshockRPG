@@ -25,7 +25,7 @@ jobs:
       run: dotnet restore ElfshockRPGGame/ElfshockRPGGame.sln
 
     - name: Build the project
-      run: dotnet build ElfshockRPGGame/ElfshockRPGGame.slnj --no-restore
+      run: dotnet build ElfshockRPGGame/ElfshockRPGGame.sln --no-restore
 
     - name: Run tests
       run: dotnet test ElfshockRPGGame/ElfshockRPGGame.sln --no-build --verbosity normal
