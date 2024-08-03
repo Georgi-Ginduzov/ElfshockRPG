@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-test:
     runs-on: windows-latest
 
     steps:
@@ -22,10 +22,10 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore ElfshockRPG/ElfshockRPGGame/ElfshockRPGGame.sln
+      run: dotnet restore ElfshockRPGGame/ElfshockRPGGame.sln
 
     - name: Build the project
-      run: dotnet build ElfshockRPG/ElfshockRPGGame/RPG/RPG.csproj --no-restore
+      run: dotnet build ElfshockRPGGame/RPG/RPG.csproj --no-restore
 
     - name: Run tests
-      run: dotnet test ElfshockRPG/ElfshockRPGGame/GameTests/Gametests.csproj --no-build --verbosity normal
+      run: dotnet test ElfshockRPGGame/GameTests/Gametests.csproj --no-build --verbosity normal
