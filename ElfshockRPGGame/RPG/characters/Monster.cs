@@ -17,6 +17,12 @@
             Setup();
         }
 
+        public void LocationSetup(int min, int max)
+        {
+            _x = _random.Next(min, max);
+            _y = _random.Next(min, max);
+        }
+
         public void CalculateNextMove(Hero hero)
         {
             var (heroX, heroY) = hero.GetPosition();
