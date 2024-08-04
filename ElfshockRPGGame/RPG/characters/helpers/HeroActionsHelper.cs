@@ -37,6 +37,7 @@ namespace RPG.characters.helpers
 
                 if (remainingPoints == 0)
                 {
+                    hero.Setup();
                     return;
                 }
             }
@@ -59,6 +60,7 @@ namespace RPG.characters.helpers
 
                 if (remainingPoints == 0)
                 {
+                    hero.Setup();
                     return;
                 }
             }
@@ -76,8 +78,8 @@ namespace RPG.characters.helpers
 
             if (pointsInput > 0)
             {
-                hero.Agility += pointsInput;
-                remainingPoints -= pointsInput;
+                hero.Intelligence += pointsInput;
+                hero.Setup();
             }
         }
 
@@ -111,7 +113,7 @@ namespace RPG.characters.helpers
             int number = int.TryParse(input, out number) ? number : -1;
 
             if (IsValidStringInput(input) || number < 0 || number >= heroTypesCount)
-                return false;
+                return true;
 
             return true;
         }
