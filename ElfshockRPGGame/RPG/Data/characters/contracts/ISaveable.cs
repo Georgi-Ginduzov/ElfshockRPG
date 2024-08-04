@@ -1,4 +1,4 @@
-﻿namespace RPG.characters.contracts
+﻿namespace RPG.Data.characters.contracts
 {
     public interface ISaveable
     {

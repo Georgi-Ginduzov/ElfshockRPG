@@ -1,6 +1,6 @@
-﻿using RPG.characters.contracts;
+﻿using RPG.Data.characters.contracts;
 
-namespace RPG.characters
+namespace RPG.Data.characters
 {
     public abstract class Hero : Character, IBuff, ISaveableHero
     {

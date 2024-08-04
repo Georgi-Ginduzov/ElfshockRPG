@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RPG.models;
+using RPG.Data.models;
 using System.Reflection;
 
-namespace RPG.characters.helpers
+namespace RPG.Data.characters.helpers
 {
     public static class HeroActionsHelper
     {

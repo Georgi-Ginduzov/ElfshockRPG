@@ -1,4 +1,4 @@
-﻿namespace RPG.characters
+﻿namespace RPG.Data.characters
 {
     public class Monster : Character
     {
@@ -7,13 +7,13 @@
         private readonly Random _random = new Random();
 
         public Monster()
-        {        
+        {
             Strength = _random.Next(randomMinStat, randomMaxStat);
             Agility = _random.Next(randomMinStat, randomMaxStat);
             Intelligence = _random.Next(randomMinStat, randomMaxStat);
             Range = 1;
             Symbol = '◙';
-            
+
             Setup();
         }
 
