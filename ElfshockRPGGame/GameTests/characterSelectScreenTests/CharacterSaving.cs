@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RPG;
-using RPG.characters.heroes;
-using RPG.models;
+using RPG.Data;
+using RPG.Data.characters.heroes;
+using RPG.Data.models;
 using Assert = NUnit.Framework.Assert;
 
 namespace GameTests.characterSelectScreenTests
