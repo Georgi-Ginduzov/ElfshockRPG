@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            
-            
+            Game elfshock = new();
+            elfshock.Run();
         }
     }
 }

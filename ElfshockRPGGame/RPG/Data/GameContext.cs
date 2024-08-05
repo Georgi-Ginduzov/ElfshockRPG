@@ -1,21 +1,35 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RPG.models;
+using Microsoft.Extensions.Configuration;
+using RPG.Data.models;
 
-namespace RPG
+namespace RPG.Data
 {
     public class GameContext : DbContext
     {
         public DbSet<HeroEntity> Heroes { get; set; }
-        
+
+        public GameContext()
+        {
+
+        }
+
         public GameContext(DbContextOptions<GameContext> options) : base(options)
         {
         }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ElfshockRPGGameDb;Trusted_Connection=True;");
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .AddEnvironmentVariables()
+                    .Build();
+
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseSqlServer(connectionString);
             }
         }
 

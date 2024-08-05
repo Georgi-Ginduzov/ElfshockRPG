@@ -1,6 +1,6 @@
-﻿using RPG.characters.contracts;
+﻿using RPG.Data.characters.contracts;
 
-namespace RPG.characters
+namespace RPG.Data.characters
 {
     public abstract class Character : ICharacter
     {
@@ -30,52 +30,52 @@ namespace RPG.characters
             Damage = Agility * 2;
         }
 
-        public int Strength 
-        { 
-            get => _strength;
-            set => _strength = value; 
-        }
-        public int Agility 
+        public int Strength
         {
-            get => _agility; 
+            get => _strength;
+            set => _strength = value;
+        }
+        public int Agility
+        {
+            get => _agility;
             set => _agility = value;
         }
-        public int Intelligence 
-        { 
+        public int Intelligence
+        {
             get => _intelligence;
             set => _intelligence = value;
         }
-        public int Range 
-        { 
+        public int Range
+        {
             get => _range;
             set => _range = value;
         }
 
-        public char Symbol 
+        public char Symbol
         {
-            get => _symbol; 
+            get => _symbol;
             set => _symbol = value;
         }
 
-        public int Health 
-        { 
+        public int Health
+        {
             get => _health;
             set => _health = value;
         }
-        public int Mana 
-        { 
+        public int Mana
+        {
             get => _mana;
             set => _mana = value;
         }
-        public int Damage 
-        { 
+        public int Damage
+        {
             get => _damage;
             set => _damage = value;
         }
 
-        public void Attack()
+        public virtual void Attack(Character enemy)
         {
-            throw new NotImplementedException();
+            enemy.Health -= Damage;
         }
 
         public void Move(int dx, int dy)

@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RPG.characters.heroes;
+using RPG.Data.characters.heroes;
 using Assert = NUnit.Framework.Assert;
 
 namespace GameTests

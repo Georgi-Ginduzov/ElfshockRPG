@@ -1,7 +1,7 @@
-﻿using RPG.characters.heroes;
-using RPG.characters;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Assert = NUnit.Framework.Assert;
+using RPG.Data.characters;
+using RPG.Data.characters.heroes;
 
 namespace GameTests.characterSelectScreenTests
 {
