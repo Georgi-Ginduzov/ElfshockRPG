@@ -1,6 +1,4 @@
-﻿using RPG.Data.characters;
-
-namespace RPG.Data.characters.heroes
+﻿namespace RPG.Data.characters.heroes
 {
     public class Archer : Hero
     {

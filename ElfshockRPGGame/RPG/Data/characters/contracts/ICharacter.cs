@@ -3,6 +3,6 @@
     public interface ICharacter
     {
         public void Move(int dx, int dy);
-        public void Attack();
+        public void Attack(Character character);
     }
 }

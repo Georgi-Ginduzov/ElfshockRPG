@@ -1,4 +1,4 @@
-using RPG.characters;
+using RPG.Data.characters;
 using RPG.screens;
 
 namespace RPG
@@ -10,7 +10,6 @@ namespace RPG
        
         private Hero _hero;
         
-
         public void Run()
         {
             while (_currentScreen != GameScreen.Exit)
@@ -22,11 +21,12 @@ namespace RPG
                         _currentScreen = GameScreen.CharacterSelect;
                         break;
                     case GameScreen.CharacterSelect:
-                        CharacterSelectScreen.Run();
+                        CharacterSelectScreen.Run(ref _hero);
                         _currentScreen = GameScreen.InGame;
                         break;
                     case GameScreen.InGame:
-                        ShowInGame();
+                        InGameScreen inGame = new(ref _hero);
+                        inGame.Run();
                         break;
                     case GameScreen.Exit:
                         ExitScreen.Run();
@@ -34,25 +34,5 @@ namespace RPG
                 }
             }
         }
-
-        private void ShowInGame()
-        {
-            // In-game logic here
-            Console.Clear();
-            Console.WriteLine("In Game Screen");
-            Console.WriteLine("Press 'E' to exit to Main Menu.");
-            if (Console.ReadKey().Key == ConsoleKey.E)
-            {
-                _currentScreen = GameScreen.Exit;
-            }
-        }
-
-
-        private void PrintField()
-        {
-
-        }
-        
     }
-
 }

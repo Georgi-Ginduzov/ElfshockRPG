@@ -1,16 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RPG.characters;
-using RPG.characters.helpers;
-using RPG.models;
-using System.Reflection;
+﻿using RPG.Data.characters;
+using RPG.Data.characters.helpers;
 
 namespace RPG.screens
 {
     public class CharacterSelectScreen
     {
         private const int maxPointsForDistribution = 3;
+        
 
-        public static void Run()
+        public CharacterSelectScreen()
+        {
+            
+        }
+
+        public static void Run(ref Hero hero)
         {
             Console.Clear();
             Console.WriteLine("Choose character type:");
@@ -30,12 +33,12 @@ namespace RPG.screens
 
             int selectedIndex = (int.Parse(choice!)) - 1;
             Type selectedHeroType = heroTypes[selectedIndex];
-            Hero hero = (Activator.CreateInstance(type: selectedHeroType) as Hero)!;
+            hero = (Activator.CreateInstance(type: selectedHeroType) as Hero)!;
 
-            Console.WriteLine($"Would you like to buff up your stats before starting?        (Limit: {maxPointsForDistribution} points total");
-            Console.WriteLine("Response (Y/N): ");
+            Console.WriteLine($"Would you like to buff up your stats before starting?        (Limit: {maxPointsForDistribution} points total)");
+            Console.Write("Response (Y/N): ");
             choice = Console.ReadLine();
-            while (!HeroActionsHelper.IsValidStringInput(choice) || choice != "y" || choice != "n")
+            while (!HeroActionsHelper.IsValidStringInput(choice) || choice != "y" && choice != "n")
             {
                 Console.WriteLine("Invalid input. Please enter a valid choice.");
                 choice = Console.ReadLine();
@@ -47,9 +50,6 @@ namespace RPG.screens
             }
 
             HeroActionsHelper.SaveHeroToDatabase(hero);
-            Console.WriteLine($"Hero {hero.GetType().Name} created and saved to database.");
         }
-
-        
     }
 }

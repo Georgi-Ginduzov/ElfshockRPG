@@ -73,9 +73,9 @@ namespace RPG.Data.characters
             set => _damage = value;
         }
 
-        public void Attack()
+        public virtual void Attack(Character enemy)
         {
-            throw new NotImplementedException();
+            enemy.Health -= Damage;
         }
 
         public void Move(int dx, int dy)
