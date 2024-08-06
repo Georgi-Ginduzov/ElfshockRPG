@@ -123,7 +123,10 @@ namespace RPG.screens
 
         public void Render()
         {
-            Console.Clear();
+            if (!Console.IsOutputRedirected)
+            {
+                Console.Clear();
+            }
 
             Console.WriteLine($"Health: {_hero.Health}    Mana: {_hero.Mana}");
             Console.WriteLine();
