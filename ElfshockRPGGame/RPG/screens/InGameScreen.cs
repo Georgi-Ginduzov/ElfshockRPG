@@ -1,4 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Tokens;
 using RPG.Data.characters;
 using System.Text;
 
@@ -16,11 +16,11 @@ namespace RPG.screens
         public InGameScreen(ref Hero hero)
         {
             _hero = hero;
+            _field = new Field(_fieldSize, _fieldFiller);
 
             _monsters = [];
             GenerateMonster();
 
-            _field = new Field(_fieldSize, _fieldFiller);
             SetupGameField();
         }
 
