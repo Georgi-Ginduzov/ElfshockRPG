@@ -1,4 +1,4 @@
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using RPG.Data.characters;
 using System.Text;
 
@@ -168,7 +168,7 @@ namespace RPG.screens
             Monster monster = new();
             monster.LocationSetup(0, _fieldSize);
             
-            while (monster.GetPosition == _hero.GetPosition)
+            while (_field.IsOccupied(monster.GetPosition().x, monster.GetPosition().y))
             {
                 monster.LocationSetup(0, _fieldSize);
             }
