@@ -163,7 +163,7 @@ namespace RPG.screens
             }
         }
 
-        private void GenerateMonster()
+        public void GenerateMonster()
         {
             Monster monster = new();
             monster.LocationSetup(0, _fieldSize);
