@@ -88,5 +88,11 @@ namespace RPG.Data.characters
         {
             return (_x, _y);
         }
+
+        public void SetPosition(int x, int y)
+        {
+            _x = x;
+            _y = y;
+        }
     }
 }

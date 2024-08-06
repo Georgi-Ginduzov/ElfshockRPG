@@ -26,6 +26,8 @@ namespace RPG.screens
 
         public IReadOnlyCollection<Monster> Monsters { get => _monsters; }
 
+        public Field Field { get => _field; }
+
         public void Run()
         {
 
@@ -60,7 +62,7 @@ namespace RPG.screens
         {
             int i = 0;
 
-            List<Monster> nearEnemies = CheckForNearEnemies().ToList();
+            List<Monster> nearEnemies = NearEnemies().ToList();
 
             if (nearEnemies.IsNullOrEmpty())
             {
@@ -89,10 +91,13 @@ namespace RPG.screens
 
             if (monsterToAttack.Health <= 0)
             {
-                _monsters.Remove(monsterToAttack);
+                HandleDeadCharacter(monsterToAttack);
                 RemoveFromField(monsterToAttack);
             }
         }
+
+        public void HandleDeadCharacter(Character character) => RemoveFromField(character);
+        
 
         private void RemoveFromField(Character character)
         {
@@ -100,7 +105,7 @@ namespace RPG.screens
             _field.RemovePosition(x, y);
         }
 
-        private IEnumerable<Monster> CheckForNearEnemies()
+        public IEnumerable<Monster> NearEnemies()
         {
             (int x, int y) = _hero.GetPosition();
             List<Monster> nearMonsters = new();
@@ -118,7 +123,7 @@ namespace RPG.screens
             return nearMonsters;
         }
 
-        private bool IsInRange(int distanceX, int distanceY, int range) 
+        public bool IsInRange(int distanceX, int distanceY, int range) 
             => Math.Abs(distanceX) <= range && Math.Abs(distanceY) <= range;
 
         public void Render()
@@ -143,7 +148,7 @@ namespace RPG.screens
             Console.WriteLine("2) Move");
         }
 
-        private void SetupGameField()
+        public void SetupGameField()
         {
             foreach (var monster in _monsters)
             {
