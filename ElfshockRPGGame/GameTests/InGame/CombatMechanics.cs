@@ -20,7 +20,7 @@ namespace GameTests.InGame
         {
             _hero = new Mage();
             _monster = new Monster();
-            _inGameScreen = new InGameScreen(ref _hero);
+            _inGameScreen = new InGameScreen();
         }
 
         [Test]
@@ -100,17 +100,18 @@ namespace GameTests.InGame
         [Test]
         public void TestIsInRange()
         {
-            // Test cases where the target is within range
-            Assert.That(_inGameScreen.IsInRange(0, 0, 3), Is.True);
-            Assert.That(_inGameScreen.IsInRange(1, 1, 3), Is.True);
-            Assert.That(_inGameScreen.IsInRange(2, 2, 3), Is.True);
-            Assert.That(_inGameScreen.IsInRange(3, 0, 3), Is.True);
-            Assert.That(_inGameScreen.IsInRange(0, 3, 3), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_inGameScreen.IsInRange(0, 0, 3), Is.True);
+                Assert.That(_inGameScreen.IsInRange(1, 1, 3), Is.True);
+                Assert.That(_inGameScreen.IsInRange(2, 2, 3), Is.True);
+                Assert.That(_inGameScreen.IsInRange(3, 0, 3), Is.True);
+                Assert.That(_inGameScreen.IsInRange(0, 3, 3), Is.True);
 
-            // Test cases where the target is out of range
-            Assert.That(_inGameScreen.IsInRange(4, 0, 3), Is.False);
-            Assert.That(_inGameScreen.IsInRange(0, 4, 3), Is.False);
-            Assert.That(_inGameScreen.IsInRange(4, 4, 3), Is.False);
+                Assert.That(_inGameScreen.IsInRange(4, 0, 3), Is.False);
+                Assert.That(_inGameScreen.IsInRange(0, 4, 3), Is.False);
+                Assert.That(_inGameScreen.IsInRange(4, 4, 3), Is.False);
+            });
         }
     }
 }

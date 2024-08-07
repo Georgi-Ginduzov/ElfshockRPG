@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Assert = NUnit.Framework.Assert;
 using RPG.Data.characters;
 using RPG.Data.characters.heroes;
+
+using Assert = NUnit.Framework.Assert;
 
 namespace GameTests.characterSelectScreenTests
 {
     [TestClass]
     public class GameTests
     {
-        // Character creation tests
         [Test]
         public void TestHeroCreation_Mage()
         {
@@ -91,9 +91,8 @@ namespace GameTests.characterSelectScreenTests
         private T CreateHero<T>() where T : Hero
         {
             var heroType = typeof(T);
-            var hero = Activator.CreateInstance(heroType) as Hero;
 
-            if (hero == null)
+            if (Activator.CreateInstance(heroType) is not Hero hero)
             {
                 throw new InvalidOperationException($"Failed to create an instance of {heroType.Name}");
             }
@@ -101,8 +100,6 @@ namespace GameTests.characterSelectScreenTests
             return (hero as T)!;
         }
 
-
-        // Character points distribution tests
         [Test]
         public void TestDistributePoints_Mage()
         {
@@ -160,9 +157,5 @@ namespace GameTests.characterSelectScreenTests
             hero.IncreaseAgility(agilityPoints);
             hero.IncreaseIntelligence(intelligencePoints);
         }
-
-
-
-
     }
 }
