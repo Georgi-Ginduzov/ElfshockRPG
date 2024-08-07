@@ -1,20 +1,25 @@
 ﻿using RPG.Data.characters.contracts;
+using RPG.Data.models;
+using System.Reflection;
 
 namespace RPG.Data.characters
 {
     public abstract class Hero : Character, IBuff, ISaveableHero
     {
+        private Guid _id;
+        private DateTime _creationTime;
+
         protected Hero()
         {
             _x = 1;
             _y = 1;
 
-            CreationTime = DateTime.Now;
-            Id = Guid.NewGuid();
+            _creationTime = DateTime.Now;
+            _id = Guid.NewGuid();
         }
 
-        public DateTime CreationTime { get; }
-        public Guid Id { get; }
+        public DateTime CreationTime { get => _creationTime; }
+        public Guid Id { get => _id; }
 
         public void IncreaseStrength(int points)
         {
@@ -36,24 +41,49 @@ namespace RPG.Data.characters
 
         public void Move()
         {
-            // while in bounds and not dead
             var key = Console.ReadKey().Key;
             var movementMap = new Dictionary<ConsoleKey, (int dx, int dy)>
-            {
-                { ConsoleKey.W, (0, -1) }, // Up
-                { ConsoleKey.S, (0, 1) },  // Down
-                { ConsoleKey.A, (-1, 0) }, // Left
-                { ConsoleKey.D, (1, 0) },  // Right
-                { ConsoleKey.Q, (-1, -1) }, // Up-Left
-                { ConsoleKey.E, (1, -1) },  // Up-Right
-                { ConsoleKey.Z, (-1, 1) },  // Down-Left
-                { ConsoleKey.X, (1, 1) }    // Down-Right
-            };
+                {
+                    { ConsoleKey.W, (0, -1) },
+                    { ConsoleKey.S, (0, 1) },
+                    { ConsoleKey.A, (-1, 0) },
+                    { ConsoleKey.D, (1, 0) },
+                    { ConsoleKey.Q, (-1, -1) },
+                    { ConsoleKey.E, (1, -1) },
+                    { ConsoleKey.Z, (-1, 1) },
+                    { ConsoleKey.X, (1, 1) }
+                };
 
             if (movementMap.TryGetValue(key, out var movement))
             {
                 Move(movement.dx, movement.dy);
             }
+        }
+
+        public static explicit operator Hero(HeroEntity entity)
+        {
+            Type? heroType = (Assembly.GetAssembly(typeof(Hero)))?
+                .GetTypes()
+                .FirstOrDefault(t => t.Name == entity.Type);
+
+            if (heroType == null)
+            {
+                throw new InvalidOperationException($"Hero type '{entity.Type}' not found.");
+            }
+
+            var hero = (Hero)Activator.CreateInstance(heroType)!;
+            hero._id = entity.Id;
+            hero.Strength = entity.Strength;
+            hero.Agility = entity.Agility;
+            hero.Intelligence = entity.Intelligence;
+            hero.Range = entity.Range;
+            hero.Symbol = entity.Symbol;
+            hero.Health = entity.Health;
+            hero.Mana = entity.Mana;
+            hero.Damage = entity.Damage;
+            hero._creationTime = entity.CreationTime;
+
+            return hero;
         }
     }
 }

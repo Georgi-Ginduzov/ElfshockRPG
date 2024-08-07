@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RPG;
+﻿using RPG;
 using RPG.screens;
 using RPG.Data.characters;
 using RPG.Data.characters.heroes;
@@ -21,7 +20,7 @@ namespace GameTests.InGame
             _hero = new Warrior();
             
             _field = new Field(10, ',');
-            _inGameScreen = new InGameScreen(ref _hero);
+            _inGameScreen = new InGameScreen();
         }
 
         [Test]

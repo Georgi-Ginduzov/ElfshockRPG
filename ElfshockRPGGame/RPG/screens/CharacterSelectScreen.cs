@@ -1,19 +1,21 @@
-﻿using RPG.Data.characters;
+﻿using RPG.Data;
+using RPG.Data.characters;
 using RPG.Data.characters.helpers;
+using RPG.Data.models;
 
 namespace RPG.screens
 {
     public class CharacterSelectScreen
     {
+        private Hero? _hero;
         private const int maxPointsForDistribution = 3;
-        
 
         public CharacterSelectScreen()
         {
             
         }
 
-        public static void Run(ref Hero hero)
+        public async Task RunAsync()
         {
             Console.Clear();
             Console.WriteLine("Choose character type:");
@@ -33,7 +35,9 @@ namespace RPG.screens
 
             int selectedIndex = (int.Parse(choice!)) - 1;
             Type selectedHeroType = heroTypes[selectedIndex];
-            hero = (Activator.CreateInstance(type: selectedHeroType) as Hero)!;
+            _hero = (Activator.CreateInstance(type: selectedHeroType) as Hero)!;
+
+            var saveTask = Task.Run(() => HeroActionsHelper.SaveHeroToDatabaseAsync(_hero));
 
             Console.WriteLine($"Would you like to buff up your stats before starting?        (Limit: {maxPointsForDistribution} points total)");
             Console.Write("Response (Y/N): ");
@@ -46,10 +50,29 @@ namespace RPG.screens
 
             if (choice.Equals("y"))
             {
-                HeroActionsHelper.DistributePoints(hero);
-            }
+                HeroActionsHelper.DistributePoints(_hero);
 
-            HeroActionsHelper.SaveHeroToDatabase(hero);
+                try
+                {
+                    await saveTask;
+                    await HeroActionsHelper.UpdateHeroInDatabaseAsync(_hero);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred while saving the updated hero: {ex.Message}");
+                    Thread.Sleep(2000);
+                }
+
+            }
+            
+            try
+            {
+                await saveTask;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving the hero: {ex.Message}");
+            }
         }
     }
 }

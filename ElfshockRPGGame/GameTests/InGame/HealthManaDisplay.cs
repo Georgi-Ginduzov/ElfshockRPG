@@ -17,7 +17,7 @@ namespace GameTests.InGame
         public void Init()
         {
             _hero = new Warrior();
-            _inGameScreen = new InGameScreen(ref _hero);
+            _inGameScreen = new InGameScreen();
             _mockTextWriter = new Mock<TextWriter>();
             Console.SetOut(_mockTextWriter.Object);
         }
@@ -27,8 +27,7 @@ namespace GameTests.InGame
         {
             _inGameScreen.Render();
 
-            _mockTextWriter.Verify(tw => tw.WriteLine(It.Is<string>(s => s.Contains("Health: 15    Mana: 0"))), Times.Once);
-            
+            _mockTextWriter.Verify(tw => tw.WriteLine(It.Is<string>(s => s.Contains("Health: 25    Mana: 0"))), Times.Once);            
         }
     }
 }
