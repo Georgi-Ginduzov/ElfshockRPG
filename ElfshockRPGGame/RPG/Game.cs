@@ -1,4 +1,3 @@
-using RPG.Data.characters;
 using RPG.screens;
 
 namespace RPG
@@ -6,11 +5,8 @@ namespace RPG
     public class Game
     {
         private GameScreen _currentScreen = GameScreen.MainMenu;
-        private const int maxPointsForDistribution = 3;
        
-        private Hero _hero;
-        
-        public void Run()
+        public async Task RunAsync()
         {
             while (_currentScreen != GameScreen.Exit)
             {
@@ -21,15 +17,18 @@ namespace RPG
                         _currentScreen = GameScreen.CharacterSelect;
                         break;
                     case GameScreen.CharacterSelect:
-                        CharacterSelectScreen.Run(ref _hero);
+                        CharacterSelectScreen selectionScreen = new();
+                        await selectionScreen.RunAsync();
                         _currentScreen = GameScreen.InGame;
                         break;
                     case GameScreen.InGame:
-                        InGameScreen inGame = new(ref _hero);
+                        InGameScreen inGame = new();
                         inGame.Run();
                         break;
                     case GameScreen.Exit:
                         ExitScreen.Run();
+                        break;
+                    default:
                         break;
                 }
             }

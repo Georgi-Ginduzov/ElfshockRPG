@@ -1,11 +1,12 @@
-﻿namespace RPG
+﻿
+namespace RPG
 {
     internal class StartUp
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Game elfshock = new();
-            elfshock.Run();
+            await elfshock.RunAsync();
         }
     }
 }
