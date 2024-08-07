@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using RPG.Data.characters;
+using RPG.Data.characters.helpers;
 using System.Text;
 
 namespace RPG.screens
@@ -13,9 +14,13 @@ namespace RPG.screens
         private readonly HashSet<Monster> _monsters;
         private readonly Field _field;
 
-        public InGameScreen(ref Hero hero)
+        public InGameScreen()
         {
-            _hero = hero;
+            _hero = HeroActionsHelper
+                .GetLastHeroFromDatabaseAsync()
+                .GetAwaiter()
+                .GetResult();
+
             _field = new Field(_fieldSize, _fieldFiller);
 
             _monsters = [];
