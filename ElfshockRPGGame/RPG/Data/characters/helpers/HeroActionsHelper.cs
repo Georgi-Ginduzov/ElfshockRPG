@@ -105,6 +105,61 @@ namespace RPG.Data.characters.helpers
             context.SaveChanges();
         }
 
+        public static async Task SaveHeroToDatabaseAsync(Hero hero)
+        {
+            using var context = new GameContext(new DbContextOptions<GameContext>());
+            var heroEntity = new HeroEntity
+            {
+                Id = hero.Id,
+                Type = hero.GetType().Name,
+                Strength = hero.Strength,
+                Agility = hero.Agility,
+                Intelligence = hero.Intelligence,
+                Range = hero.Range,
+                Symbol = hero.Symbol,
+                Health = hero.Health,
+                Mana = hero.Mana,
+                Damage = hero.Damage,
+                CreationTime = hero.CreationTime
+            };
+
+            await context.Heroes.AddAsync(heroEntity);
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task<Hero> GetLastHeroFromDatabaseAsync()
+        {
+            using var context = new GameContext(new DbContextOptions<GameContext>());
+            var lastHeroEntity = await context.Heroes
+                .OrderByDescending(h => h.CreationTime)
+                .FirstOrDefaultAsync();
+
+            if (lastHeroEntity == null)
+            {
+                throw new InvalidOperationException("No heroes found in the database.");
+            }
+            
+            return (Hero)lastHeroEntity;
+        }
+
+        public static async Task UpdateHeroInDatabaseAsync(Hero hero)
+        {
+            using var context = new GameContext(new DbContextOptions<GameContext>());
+            var heroEntity = await context.Heroes.FirstOrDefaultAsync(h => h.Id == hero.Id);
+
+            if (heroEntity != null)
+            {
+                heroEntity.Strength = hero.Strength;
+                heroEntity.Agility = hero.Agility;
+                heroEntity.Intelligence = hero.Intelligence;
+                heroEntity.Health = hero.Health;
+                heroEntity.Mana = hero.Mana;
+                heroEntity.Damage = hero.Damage;
+
+                await context.SaveChangesAsync();
+            }
+        }
+
 
         public static bool IsValidPointsInput(int input, int remainingPoints) => input >= 0 && input <= remainingPoints;
         public static bool IsValidStringInput(string? input) => !string.IsNullOrEmpty(input) && input != " ";
